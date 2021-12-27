@@ -1,0 +1,22 @@
+<Ability>
+    <key>ugh</key>
+
+    <effectOffsets>
+        <Vector2Int>
+            <x>+1</x>
+            <y>+1</y>
+        </Vector2Int>
+        <Vector2Int>
+            <x>+1</x>
+            <y>-1</y>
+        </Vector2Int>
+        <Vector2Int>
+            <x>-1</x>
+            <y>+1</y>
+        </Vector2Int>
+        <Vector2Int>
+            <x>-1</x>
+            <y>-1</y>
+        </Vector2Int>
+    </effectOffsets>
+</Ability>

@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Xml;
-using System.Xml.Serialization;
 
-public class Resource
+public class Enemy
 {
     public string name;
-    public long value;
+    public int levelRequirement;
+    public Vector2 position;
 }

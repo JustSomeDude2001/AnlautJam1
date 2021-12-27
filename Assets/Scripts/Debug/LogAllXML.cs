@@ -8,9 +8,16 @@ public class LogAllXML : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(string file in Directory.EnumerateFiles("Core", "Resource_*.xml", SearchOption.AllDirectories)) {
-            Resource newResource = XMLOp<Resource>.Deserialize(file);
-            Debug.Log(newResource.name);
+        foreach(string file in Directory.EnumerateFiles("Core", "Ability_*.xml", SearchOption.AllDirectories)) {
+            Ability newResource = XMLOp<Ability>.Deserialize(file);
+            //newResource.invokeEffect();
+            //XMLOp<Ability>.Serialize(newResource, "test.xml");
+        }
+        foreach(string file in Directory.EnumerateFiles("Core", "Enemy_*.xml", SearchOption.AllDirectories)) {
+            Enemy newResource = XMLOp<Enemy>.Deserialize(file);
+            Debug.Log(newResource.position);
+            //newResource.invokeEffect();
+            //XMLOp<Ability>.Serialize(newResource, "test.xml");
         }
     }
 
