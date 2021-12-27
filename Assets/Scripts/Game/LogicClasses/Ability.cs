@@ -52,4 +52,5 @@ public class Ability
 
     public Ability(int level) : this(level + 1, 
                                      level * System.Math.Max(level / 2, 1) + 1) { }
+    public Ability() : this(0, 0) { }
 }

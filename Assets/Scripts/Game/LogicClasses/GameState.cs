@@ -17,14 +17,27 @@ public class GameState
     public int xp = 0;
     public int xpToNextLevel = 10;
 
-    private GameState() {
-        instance = this;
+    public Ability GetAbility(string key) {
+        for (int i = 0; i < abilities.Count; i++) {
+            if (abilities[i].key == key) {
+                return abilities[i];
+            }
+        }
+        return new Ability(0, 0);
+    }
 
-        foreach (string file in Directory.EnumerateDirectories("Core", "Ability_*.xml")) {
+    private GameState() {
+        Debug.Log("Created new game state");
+        instance = this;
+        abilities = new List<Ability>();
+        enemies = new List<Enemy>();
+
+        foreach (string file in Directory.EnumerateFiles("Core", "Ability_*.xml", SearchOption.AllDirectories)) {
             abilities.Add(XMLOp<Ability>.Deserialize(file));
+            Debug.Log("Deserialized Ability with key " + abilities[abilities.Count - 1].key);
         }
 
-        foreach (string file in Directory.EnumerateDirectories("Core", "Enemy_*.xml")) {
+        foreach (string file in Directory.EnumerateFiles("Core", "Enemy_*.xml", SearchOption.AllDirectories)) {
             enemies.Add(XMLOp<Enemy>.Deserialize(file));
         }
 
