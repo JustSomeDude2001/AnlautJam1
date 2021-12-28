@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     GameState gameState;
+    Movable selfMover;
     private void Start() {
         gameState = GameState.GetInstance();
+        selfMover = GetComponent<Movable>();
     }
     private void Update() {
         Vector3 newPos = transform.position;
@@ -22,7 +24,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D)) {
             newPos.x++;
         }
-        if (gameState.boardRadius - newPos.magnitude > 0.5)
-            transform.position = newPos;
+        selfMover.MoveTo(newPos);
     }
 }

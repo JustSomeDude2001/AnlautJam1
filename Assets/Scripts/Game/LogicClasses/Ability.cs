@@ -41,7 +41,7 @@ public class Ability
             }
         }
 
-        string candidates = "tyughjbnm";
+        string candidates = "tyughj";
 
         key = "";
 

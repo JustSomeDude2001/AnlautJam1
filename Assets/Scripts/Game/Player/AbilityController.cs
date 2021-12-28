@@ -14,26 +14,35 @@ public class AbilityController : MonoBehaviour
         abilityInvoker = GetComponent<AbilityInvoker>();
     }
 
+    bool needReGhost = false;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.T)) {
             currentString += 't';
+            needReGhost = true;
         }
         if (Input.GetKeyDown(KeyCode.Y)) {
             currentString += 'y';
+            needReGhost = true;
         }
         if (Input.GetKeyDown(KeyCode.U)) {
             currentString += 'u';
+            needReGhost = true;
         }
         if (Input.GetKeyDown(KeyCode.G)) {
             currentString += 'g';
+            needReGhost = true;
         }
         if (Input.GetKeyDown(KeyCode.H)) {
             currentString += 'h';
+            needReGhost = true;
         }
         if (Input.GetKeyDown(KeyCode.J)) {
             currentString += 'j';
+            needReGhost = true;
         }
+        /*
         if (Input.GetKeyDown(KeyCode.B)) {
             currentString += 'b';
         }
@@ -43,13 +52,26 @@ public class AbilityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M)) {
             currentString += 'm';
         }
+        */
+
+        if (needReGhost) {
+            needReGhost = false;
+            transform.DetachChildren();
+            Ability currentAbility = gameState.GetAbility(currentString);
+            if (currentAbility != null) {
+                abilityInvoker.GhostAbility(currentAbility);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
             Ability currentAbility = gameState.GetAbility(currentString);
-            Debug.Log("Invoking ability with key " + currentString);
-            
-            abilityInvoker.InvokeAbility(currentAbility);
+            if (currentAbility != null) {
+                Debug.Log("Invoking ability with key " + currentString);
+                
+                abilityInvoker.InvokeAbility(currentAbility);
+            }
             currentString = "";
+            needReGhost = true;
         }
     }
 }

@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Xml.Serialization;
 
 public class GameState
 {
     private static GameState instance;
 
-    public List <Enemy> enemies;
+    public int enemyCount = 0;
     public List <Ability> abilities;
 
     public int boardRadius = 12;
 
     public int level = 1;
 
-    public int xp = 0;
-    public int xpToNextLevel = 10;
+    [XmlIgnore]
+    public List<TurnDependent> turnDependents;
 
     public Ability GetAbility(string key) {
         for (int i = 0; i < abilities.Count; i++) {
@@ -23,43 +24,71 @@ public class GameState
                 return abilities[i];
             }
         }
-        return new Ability(0, 0);
+        return null;
     }
 
     private GameState() {
         Debug.Log("Created new game state");
-        instance = this;
         abilities = new List<Ability>();
-        enemies = new List<Enemy>();
+        turnDependents = new List<TurnDependent>();
 
         foreach (string file in Directory.EnumerateFiles("Core", "Ability_*.xml", SearchOption.AllDirectories)) {
             abilities.Add(XMLOp<Ability>.Deserialize(file));
             Debug.Log("Deserialized Ability with key " + abilities[abilities.Count - 1].key);
         }
 
-        foreach (string file in Directory.EnumerateFiles("Core", "Enemy_*.xml", SearchOption.AllDirectories)) {
-            enemies.Add(XMLOp<Enemy>.Deserialize(file));
-        }
-
-        xp = 0;
-        xpToNextLevel = 10;
-        level = 1;
+        level = 0;
     }
 
-    public bool levelUp() {
-        if (xp < xpToNextLevel) {
-            return false;
-        } 
+    public Vector3 GetRandomValidPos() {
+        List <Vector3> validPositions = new List<Vector3>();
+        for (int i = -boardRadius; i <= boardRadius; i++) {
+            for (int j = -boardRadius; j <= boardRadius; j++) {
+                Vector3 newPos = new Vector3(i, j, 0);
+                if (Movable.IsFree(newPos)) {
+                    validPositions.Add(newPos);
+                }
+            }
+        }
+        int index = Random.Range(0, validPositions.Count);
+        return validPositions[index];
+    }
 
-        xp -= xpToNextLevel;
-        xpToNextLevel *= 2;
-        level++;
+    public void SpawnEnemy(Vector3 position, 
+                           int radius, int intensity, int frequency) {
+        if (Movable.IsFree(position)) {
+            GameObject newEnemy = GameObject.Instantiate(Resources.Load<GameObject>("Enemy"), position, Quaternion.identity);
+            InvokesAbilityRegularly invoker = newEnemy.GetComponent<InvokesAbilityRegularly>();
+            invoker.ability = new Ability(radius, intensity);
+            invoker.frequency = frequency;
+        }
+    }
 
-        return true;
+    public void NextTurn() {
+        if (enemyCount == 0) {
+            SaveGame("LatestSave.xml");
+            level++;
+            for (int j = 0; j < level * level / 2 + 1; j++) {
+                SpawnEnemy(GetRandomValidPos(),
+                           level, level, 4);
+            }
+        }
+        int i = 0;
+        while (i < turnDependents.Count) {
+            int lastChecked = turnDependents.Count;
+            turnDependents[i].NextTurn();
+            if (lastChecked == turnDependents.Count) {
+                i++;
+            }
+        }
     }
 
     public static void LoadGame(string saveName) {
         instance = XMLOp<GameState>.Deserialize(saveName);
+    }
+
+    public static void SaveGame(string saveName) {
+
     }
 
     public static GameState GetInstance() {
