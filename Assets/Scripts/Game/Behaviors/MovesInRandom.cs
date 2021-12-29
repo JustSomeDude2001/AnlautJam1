@@ -19,6 +19,9 @@ public class MovesInRandom : TurnDependent
                 if (i == j && i == 0) {
                     continue;
                 }
+                if (i != 0 && j != 0) {
+                    continue;
+                }
                 possiblePositions.Add(new Vector3(i, j, 0) + transform.position);
             }
         }

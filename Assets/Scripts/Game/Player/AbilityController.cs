@@ -6,7 +6,7 @@ public class AbilityController : MonoBehaviour
 {
     GameState gameState;
     AbilityInvoker abilityInvoker;
-    string currentString = "";
+    public string currentString = "";
     void Start()
     {
         gameState = GameState.GetInstance();
@@ -30,7 +30,11 @@ public class AbilityController : MonoBehaviour
             currentString += 'u';
             needReGhost = true;
         }
-        if (Input.GetKeyDown(KeyCode.G)) {
+        if (Input.GetKeyDown(KeyCode.I)) {
+            currentString += 'i';
+            needReGhost = true;
+        }
+        /*if (Input.GetKeyDown(KeyCode.G)) {
             currentString += 'g';
             needReGhost = true;
         }
@@ -41,7 +45,7 @@ public class AbilityController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J)) {
             currentString += 'j';
             needReGhost = true;
-        }
+        }*/
         /*
         if (Input.GetKeyDown(KeyCode.B)) {
             currentString += 'b';

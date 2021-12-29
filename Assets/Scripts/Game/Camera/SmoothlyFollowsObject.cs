@@ -10,6 +10,9 @@ public class SmoothlyFollowsObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (target == null) {
+            return;
+        }
         Vector3 delta = target.transform.position - transform.position;
         delta *= approachRate * Time.deltaTime;
         delta.z = 0;

@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1221008213}
   - component: {fileID: 1221008214}
   - component: {fileID: 5812418097149555307}
+  - component: {fileID: 5840483462540727908}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -91,12 +92,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: acee47360599d03b8899042dceb03e1e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.75, y: 0.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -117,10 +118,10 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.16, y: 0.16}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 0.75, y: 0.75}
     adaptiveTilingThreshold: 0.5
     drawMode: 1
     adaptiveTiling: 0
@@ -180,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blacklistedTag: Enemy
   attack: {fileID: 6719565923425921752, guid: 375199a85407fb8c68b96c46baa43c9f, type: 3}
-  ghost: {fileID: 3494424330476475733, guid: 11a4a9d3db44f90dc8fcaff9088f09e3, type: 3}
+  ghost: {fileID: 6776932563192913388, guid: 928d7f5ea3a9e1f829c240c283bec8a4, type: 3}
 --- !u!114 &5812418097149555307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,3 +194,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b6eef1bc962e4dac88a26c0688611ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5840483462540727908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814409559214162088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1549045aa9972b9daab33b99559a8ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizes:
+  - {x: 1, y: 1, z: 0}
+  - {x: 0.9, y: 0.9, z: 0}

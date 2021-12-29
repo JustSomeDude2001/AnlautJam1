@@ -12,6 +12,7 @@ public class TurnOrderer : MonoBehaviour
     void Start()
     {
         gameState = GameState.GetInstance();
+        beatInterval = GameState.difficulty;
         selfSource = GetComponent<AudioSource>();
     }
 

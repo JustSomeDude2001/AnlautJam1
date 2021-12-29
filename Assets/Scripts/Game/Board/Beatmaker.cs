@@ -9,20 +9,29 @@ public class Beatmaker : MonoBehaviour
     private float currentTimeDelta = 0;
 
     int lastLevel;
-
+    public AudioClip stopSound;
     AudioSource selfSource;
     GameState gameState;
     BoomBox selfBoombox;
+    public static float volume = 0.5f;
     void Start()
     {
         gameState = GameState.GetInstance();
         selfSource = GetComponent<AudioSource>();
         selfBoombox = GetComponent<BoomBox>();
+        currentTimeDelta = beatInterval;
         lastLevel = -1;
+        selfSource.volume = volume;
     }
 
     void FixedUpdate()
     {
+        if (gameState.dead == true) {
+            selfSource.Stop();
+            selfSource.clip = stopSound;
+            selfSource.Play();
+            this.enabled = false;
+        }
         currentTimeDelta += Time.fixedDeltaTime;
         if (beatInterval <= currentTimeDelta) {
             currentTimeDelta -= beatInterval;

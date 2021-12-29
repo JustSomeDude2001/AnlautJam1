@@ -12,6 +12,7 @@ public class IsEnemy : MonoBehaviour
     }
 
     private void OnDestroy() {
+        gameState.killsThisTurn++;
         gameState.enemyCount--;
     }
 

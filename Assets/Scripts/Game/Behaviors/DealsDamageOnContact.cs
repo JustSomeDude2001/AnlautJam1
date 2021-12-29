@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DealsDamageOnContact : TurnDependent
+public class DealsDamageOnContact : MonoBehaviour
 {
     public string blacklistedTag;
     public int damage = 1;
 
-    public override void NextTurn() {
-        Collider2D other = Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y));
+    public void Update() {
+        Collider2D other = Physics2D.OverlapPoint(new Vector2(transform.position.x, transform.position.y), 1);
         if (other != null) {
-            Debug.Log("Collided with enemy");
+            //Debug.Log("Collided with enemy");
         } else {
             return;
         }

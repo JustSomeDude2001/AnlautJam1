@@ -41,11 +41,11 @@ public class Ability
             }
         }
 
-        string candidates = "tyughj";
+        string candidates = "tyui";
 
         key = "";
 
-        for (int i = 0; i < radius * 2; i++) {
+        for (int i = 0; i < radius + 2; i++) {
             key += candidates[Random.Range(0, candidates.Length)];
         }
     }

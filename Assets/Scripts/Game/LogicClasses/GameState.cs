@@ -14,6 +14,11 @@ public class GameState
     public int boardRadius = 12;
 
     public int level = 1;
+    public int score = 0;
+    public int killsThisTurn = 0;
+    public static float difficulty = 1;
+
+    public bool dead = false;
 
     [XmlIgnore]
     public List<TurnDependent> turnDependents;
@@ -32,10 +37,10 @@ public class GameState
         abilities = new List<Ability>();
         turnDependents = new List<TurnDependent>();
 
-        foreach (string file in Directory.EnumerateFiles("Core", "Ability_*.xml", SearchOption.AllDirectories)) {
+        /*foreach (string file in Directory.EnumerateFiles("Core", "Ability_*.xml", SearchOption.AllDirectories)) {
             abilities.Add(XMLOp<Ability>.Deserialize(file));
             Debug.Log("Deserialized Ability with key " + abilities[abilities.Count - 1].key);
-        }
+        }*/
 
         level = 0;
     }
@@ -67,6 +72,7 @@ public class GameState
     public void NextTurn() {
         if (enemyCount == 0) {
             SaveGame("LatestSave.xml");
+            abilities.Add(new Ability(level));
             level++;
             for (int j = 0; j < level * level / 2 + 1; j++) {
                 SpawnEnemy(GetRandomValidPos(),
@@ -81,6 +87,11 @@ public class GameState
                 i++;
             }
         }
+        score += killsThisTurn * 10;
+        if (killsThisTurn > 1) {
+            score += killsThisTurn * 5;
+        }
+        killsThisTurn = 0;
     }
 
     public static void LoadGame(string saveName) {
@@ -89,6 +100,10 @@ public class GameState
 
     public static void SaveGame(string saveName) {
 
+    }
+
+    public static void NewGame() {
+        instance = new GameState();
     }
 
     public static GameState GetInstance() {
